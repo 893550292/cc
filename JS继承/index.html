@@ -9,7 +9,7 @@
 	</body>
 </html>
 <script>
-   //使用对象冒充实现继承
+   //1:使用对象冒充实现继承
 //	function parent(name){
 //		this.myname=name;
 //		this.age=40;
@@ -21,32 +21,92 @@
 //		this.myparent=parent;
 //		this.myparent(name);
 //		delete this.myparent;
-//		this.sayholle=function(){
+//		this.mypre=function(){
 //			console.log(this.myname);
 //			this.myage()
 //		}
 //	}
 //	var mychild= new child("李");
-//	mychild.sayholle();
+//	mychild.mypre();
 	
-	//使用call方法改变函数上下文继承
-	function parent(name){
-		this.myname=name;
-		this.age=40;
+	//2:使用call方法改变函数上下文继承
+//	function parent(name){
+//		this.myname=name;
+//		this.age=40;
+//		this.myage=function(){
+//			console.log(this.age)
+//		}
+//	}
+//	function child(name){
+//		this.mypre=function(){
+//			console.log(this.myname);
+//			this.myage();
+//		};
+//		this.getname=function(){
+//			return name;
+//		}
+//	}
+//	var mychild=new child('张');
+//	parent.call(mychild,mychild.getname())
+//	mychild.mypre();
+//	3:apply方法改变函数上下文实现继承
+//	function Parent(firstname){
+//		this.fname=firstname;
+//		this.age=40;
+//		this.myage=function(){
+//			console.log(this.age);
+//		}
+//	}
+//	function Child(firstname){
+//		this.mypre=function(){
+//			console.log(this.fname);
+//			this.myage();
+//		}
+//		this.getname=function(){
+//			return firstname;
+//		}
+//	}
+//	var child=new Child("李");
+//	Parent.apply(child,[child.getname()]);
+//	console.log(child);
+//	child.mypre();
+//	4采用原型链的方式实现继承；
+//	function Parent(){
+//		this.myage=function(){
+//			console.log(this.age);
+//		}
+//	}
+//	function Child(firstname){
+//		this.fname=firstname;
+//		this.age=40;
+//		this.mypre=function(){
+//			console.log(this.fname);
+//			this.myage();
+//		}
+//	}
+//	Child.prototype=new Parent()//prototype 属性使您有能力向对象添加属性和方法。
+//	var child=new Child("李");
+//	child.mypre();
+//	5混合模式实现继承
+	function Parent(){
 		this.myage=function(){
-			console.log(this.age)
+			console.log(this.age);
 		}
 	}
-	function child(name){
-		this.sayhello=function(){
-			console.log(this.myname);
+	Parent.prototype.myparent=function(){
+		alert(1);
+	}
+	function Child(firstname){
+		Parent.call(this);
+		this.fname=firstname;
+		this.age=40;
+		this.mypre=function(){
+			console.log(this.fname);
 			this.myage();
-		};
-		this.getname=function(){
-			return name;
 		}
 	}
-	var mychild=new child('张');
-	parent.call(mychild,mychild.getname())
-	mychild.sayhello();
+	Child.prototype=new Parent();
+	var child=new Child("张");
+	child.mypre();
+	child.myparent();
 </script>
