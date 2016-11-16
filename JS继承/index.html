@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+	</body>
+</html>
+<script>
+   //使用对象冒充实现继承
+//	function parent(name){
+//		this.myname=name;
+//		this.age=40;
+//		this.myage=function(){
+//			console.log(this.age);
+//		}
+//	}
+//	function child(name){
+//		this.myparent=parent;
+//		this.myparent(name);
+//		delete this.myparent;
+//		this.sayholle=function(){
+//			console.log(this.myname);
+//			this.myage()
+//		}
+//	}
+//	var mychild= new child("李");
+//	mychild.sayholle();
+	
+	//使用call方法改变函数上下文继承
+	function parent(name){
+		this.myname=name;
+		this.age=40;
+		this.myage=function(){
+			console.log(this.age)
+		}
+	}
+	function child(name){
+		this.sayhello=function(){
+			console.log(this.myname);
+			this.myage();
+		};
+		this.getname=function(){
+			return name;
+		}
+	}
+	var mychild=new child('张');
+	parent.call(mychild,mychild.getname())
+	mychild.sayhello();
+</script>
